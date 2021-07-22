@@ -58,11 +58,12 @@ namespace Sat.Recruitment.Test
             
             var userController = new UsersController(this.fixture.listUserService);
 
-            UserDTO user = new UserDTO() { Name = "Mike", Email = "mike@gmail.com", Address = "Av. Juan G", Phone = "+349 1122354215", UserType = "Normal", Money = 124.0M };
+            UserDTO user = new UserDTO() { Name = "Mike", Email = "mike@gmail.com", Address = "Av. Juan G", Phone = "+349 1122354215", UserType = "Normal", Money = 124 };
             var result = userController.Create(user);
             var objectResult = result as ObjectResult;
-            Assert.Equal(200, objectResult.StatusCode);
-            Assert.Equal("User Created", objectResult.Value);
+            Assert.Equal(201, objectResult.StatusCode);
+            var userResp = objectResult.Value as User;
+            Console.WriteLine(userResp.Money);
         }
 
         [Fact]
@@ -122,9 +123,9 @@ namespace Sat.Recruitment.Test
             UserDTO user = new UserDTO() { Name = "HGari", Email = "hgari@gmail.com", Address = "Monroe", Phone = "+5491132319984", UserType = "Normal", Money = 124 };
             var result = userController.Create(user);
             var objectResult = result as ObjectResult;
-            Assert.Equal(200, objectResult.StatusCode);
+            Assert.Equal(201, objectResult.StatusCode);
 
-            Assert.Equal("User Created", objectResult.Value);
+            
 
 
         }
@@ -134,9 +135,9 @@ namespace Sat.Recruitment.Test
             var userController = new UsersController(this.fixture.listUserService);
             UserDTO user = new UserDTO() { Name = "LGari", Email = "lolo@gmail.com", Address = "Monroe", Phone = "+5491132319983",UserType="Normal",Money=124.0M };
             var result = userController.Create(user);
-            var okObjectResult = result as OkObjectResult;
-            Assert.Equal("User Created", okObjectResult.Value);
-            
+            var objectResult = result as ObjectResult;
+            Assert.Equal(201, objectResult.StatusCode);
+
         }
 
         [Fact]
@@ -148,8 +149,8 @@ namespace Sat.Recruitment.Test
             user.Email = "ale@mail.com";
             user.Address = "madrid";
             var result = userController.Create(user);
-            var okObjectResult = result as OkObjectResult;
-            Assert.Equal("User Created", okObjectResult.Value);
+            var objectResult = result as ObjectResult;
+            Assert.Equal(201, objectResult.StatusCode);
         }
 
         public void Dispose()

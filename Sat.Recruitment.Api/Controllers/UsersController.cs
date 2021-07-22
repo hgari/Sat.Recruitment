@@ -41,7 +41,9 @@ namespace Sat.Recruitment.Api.Controllers
 
                 if (result.IsSuccess)
                 {
-                    return Ok("User Created");
+                    //return Ok("User Created");
+                    return Created("", user);
+                    
                 }
                 else
                 {
