@@ -25,7 +25,7 @@ namespace Sat.Recruitment.Api.Data
                     {
                         var percentage = Convert.ToDecimal(0.8);
                         var gif = Money * percentage;
-                        Money+= Money + gif;
+                        Money+= gif;
                     }
                 }
             }
