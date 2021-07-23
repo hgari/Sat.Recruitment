@@ -7,7 +7,7 @@ namespace Sat.Recruitment.Api
 {
     public class ListUserService : IListUserService
     {
-        public List<User> Users { get; set; }
+        List<User> Users { get; set; }
         
         public ListUserService() {
             Users=new List<User>();

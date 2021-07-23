@@ -5,7 +5,6 @@ namespace Sat.Recruitment.Api
 {
     public interface IListUserService
     {
-        List<User> Users { get; set; }
         
         public Result Add(User newUser);
     }
