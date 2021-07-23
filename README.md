@@ -16,6 +16,7 @@ Se puede realizar cualquier cambio que considere necesario en el código y en lo
  - Se utilizo el patron DTO y se utiliza Validation Model
  - La funcion NormailizeEmail se creo dentro de una clase Static para Funciones Strings
  - La Salida de la Api se llevo a IResultObject
+ - Para el Calculo del Gift se implementó el patron strategy con dictionary para instanciar cada funcion de calculo
  - El control de duplicados se realiza mediante LINQ
  - Se agregaron varios test para dar cobertura de codigo
  

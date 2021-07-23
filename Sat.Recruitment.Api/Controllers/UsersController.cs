@@ -28,7 +28,7 @@ namespace Sat.Recruitment.Api.Controllers
         
         public IActionResult Create([FromBody]UserDTO userDTO)
         {
-
+            try { 
             if (userDTO == null)
                 return BadRequest();
 
@@ -36,12 +36,11 @@ namespace Sat.Recruitment.Api.Controllers
             if (ModelState.IsValid )
             {
                 User user = userDTO.MapObjects(userDTO);
-                user.Initialize();
                 Result result = this._IListUserService.Add(user);
 
                 if (result.IsSuccess)
                 {
-                    //return Ok("User Created");
+                    
                     return Created("", user);
                     
                 }
@@ -57,7 +56,12 @@ namespace Sat.Recruitment.Api.Controllers
                                         .Select(x => x.ErrorMessage));
 
             return BadRequest(messages);
-            
+            }
+            catch (Exception e)
+            {
+                //TODO: Log excepcion
+                return StatusCode(500);
+            }
         }
 
     }

@@ -18,7 +18,7 @@ namespace Sat.Recruitment.Test
             var services = new ServiceCollection();
             services.AddSingleton<IListUserService, ListUserService>();
             var serviceProvider = services.BuildServiceProvider();
-            listUserService = serviceProvider.GetService<IListUserService>();
+            ListUserService = serviceProvider.GetService<IListUserService>();
             
         }
 
@@ -27,7 +27,7 @@ namespace Sat.Recruitment.Test
             
         }
 
-        public IListUserService listUserService { get; private set; }
+        public IListUserService ListUserService { get; private set; }
     }
 
     [CollectionDefinition("Tests collection", DisableParallelization = true)]
@@ -44,7 +44,7 @@ namespace Sat.Recruitment.Test
     {
 
         //protected IListUserService _listUserService;
-        SetupFixture fixture;
+        readonly SetupFixture fixture;
         public UnitTest(SetupFixture fixture)
         {
             this.fixture = fixture;
@@ -56,7 +56,7 @@ namespace Sat.Recruitment.Test
         public void CreateNormalUserOK()
         {
             
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
 
             UserDTO user = new UserDTO() { Name = "Mike", Email = "mike@gmail.com", Address = "Av. Juan G", Phone = "+349 1122354215", UserType = "Normal", Money = 124 };
             var result = userController.Create(user);
@@ -70,7 +70,7 @@ namespace Sat.Recruitment.Test
         public void CreateUserDuplicatedByEmailKO()
         {
             
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
 
             UserDTO user = new UserDTO() { Name = "Agustina", Email = "Agustina@gmail.com", Address = "Av. Juan G", Phone = "+349 1122354215", UserType = "Normal", Money = 124.0M };
             var result = userController.Create(user);
@@ -83,7 +83,7 @@ namespace Sat.Recruitment.Test
         public void CreateUserDuplicatedByPhoneKO()
         {
 
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
 
             UserDTO user = new UserDTO() { Name = "Agustina", Email = "Agustina2@gmail.com", Address = "Av. Juan G", Phone = "+534645213542", UserType = "Normal", Money = 124.0M };
             var result = userController.Create(user);
@@ -96,7 +96,7 @@ namespace Sat.Recruitment.Test
         public void CreateUserDuplicatedByNameAndAddressKO()
         {
 
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
 
             UserDTO user = new UserDTO() { Name = "Agustina", Email = "Agustina2@gmail.com", Address = "Garay y Otra Calle", Phone = "+534645213542", UserType = "Normal", Money = 124.0M };
             var result = userController.Create(user);
@@ -107,7 +107,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void CreateUserWithoutNameKO()
         {
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
             UserDTO user = new UserDTO() { Email = "Agustina@gmail.com", Address = "Av. Juan G", Phone = "+349 1122354215", UserType = "Normal", Money = 124.0M };
             userController.ModelState.AddModelError("Name", "The name is required");
             var result = userController.Create(user);
@@ -118,7 +118,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void CheckBalanceNormalUserMore100OK()
         {
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
             
             UserDTO user = new UserDTO() { Name = "HGari_001", Email = "hgar_001i@gmail.com", Address = "Monroe_001", Phone = "+54911001", UserType = "Normal", Money = 1000 };
             var result = userController.Create(user);
@@ -130,7 +130,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void CheckBalanceNormalUserLess100OK()
         {
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
 
             UserDTO user = new UserDTO() { Name = "HGari_002", Email = "hgar_002i@gmail.com", Address = "Monroe_002", Phone = "+54911002", UserType = "Normal", Money = 90 };
             var result = userController.Create(user);
@@ -143,7 +143,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void CheckBalanceSuperUserMore100OK()
         {
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
 
             UserDTO user = new UserDTO() { Name = "HGari_003", Email = "hgar_003i@gmail.com", Address = "Monroe_003", Phone = "+54911003", UserType = "SuperUser", Money = 1000 };
             var result = userController.Create(user);
@@ -157,7 +157,7 @@ namespace Sat.Recruitment.Test
         [Fact]
         public void CheckBalancePremiumMore100OK()
         {
-            var userController = new UsersController(this.fixture.listUserService);
+            var userController = new UsersController(this.fixture.ListUserService);
 
             UserDTO user = new UserDTO() { Name = "HGari_004", Email = "hgar_004i@gmail.com", Address = "Monroe_004", Phone = "+54911004", UserType = "Premium", Money = 1000 };
             var result = userController.Create(user);

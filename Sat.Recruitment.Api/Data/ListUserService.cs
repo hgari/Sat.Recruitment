@@ -47,43 +47,14 @@ namespace Sat.Recruitment.Api
             }
             return result;
         }
-        public bool IsDuplicated(User newUser)
+        private bool IsDuplicated(User newUser)
         {
             bool resp = false;
             
-            if (this.Users.Any(u => u.Email == newUser.Email || u.Phone == newUser.Phone))
+            if (this.Users.Any(u => (u.Email == newUser.Email || u.Phone == newUser.Phone) || (u.Name == newUser.Name && u.Address == newUser.Address) ))
             {
                 resp = true;
             }
-
-            if (this.Users.Any(u => u.Name == newUser.Name && u.Address == newUser.Address))
-            {
-                resp = true;
-            }
-
-            
-            /*
-            foreach (var user in this.Users)
-            {
-                
-                if (user.Email == newUser.Email
-                    ||
-                    user.Phone == newUser.Phone)
-                {
-                    resp = true;
-                }
-                else if (user.Name == newUser.Name)
-                {
-                    if (user.Address == newUser.Address)
-                    {
-                        resp = true;
-
-                    }
-
-                }
-                
-            }
-            */
             return resp;
         }
 

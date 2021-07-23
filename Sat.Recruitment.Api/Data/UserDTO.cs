@@ -22,16 +22,20 @@ namespace Sat.Recruitment.Api.Data
 
         public User MapObjects(UserDTO stud)
         {
-            return new User()
+            
+            
+            User user= new User()
             {
                 Name = stud.Name,
-                Email = StringFunctions.NormalizeEmail (stud.Email),
+                Email = StringFunctions.NormalizeEmail(stud.Email),
                 Address = stud.Address,
-                Phone=stud.Phone,
-                UserType=stud.UserType,
-                Money=stud.Money
-                
+                Phone = stud.Phone,
+                UserType = stud.UserType,
+                Money = stud.Money
+
             };
+            user.Initialize();
+            return user;
         }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Sat.Recruitment.Api.Strategies;
+using Sat.Recruitment.Api.Strategies.Concretes;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,8 +10,28 @@ namespace Sat.Recruitment.Api.Data
 {
     public class User
     {
+        /*
+        Dictionary<string, ICalculateGift> strategies = new Dictionary<string, ICalculateGift>() {
+            { "Normal", new NormalUserCalculateGift() },
+            { "Premium", new PremiumUserCalculateGift() },
+            { "SuperUser", new SuperUserCalculateGift() }
+        };
+        ICalculateGift selectedStrategy;
+        */
+        readonly Dictionary<string, Func<ICalculateGift>> strategies = new Dictionary<string, Func<ICalculateGift>>() {
+            { "Normal", () => new NormalUserCalculateGift() },
+            { "Premium", () => new PremiumUserCalculateGift() },
+            { "SuperUser", () => new SuperUserCalculateGift() }
+    
+        };
+
+        
+        
         public void Initialize()
         {
+            ICalculateGift selectedStrategy = strategies[this.UserType]();
+            this.Money = selectedStrategy.Calculate(this.Money);
+            /*
             if (UserType == "Normal")
             {
                 if (Money> 100)
@@ -46,7 +68,7 @@ namespace Sat.Recruitment.Api.Data
                     Money +=  gif;
                 }
             }
-
+            */
         }
 
         [Required]
